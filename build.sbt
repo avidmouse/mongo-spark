@@ -6,4 +6,4 @@ scalaVersion := "2.10.4"
 
 lazy val core = project.in(file("core"))
 
-lazy val streaming = project.in(file("streaming"))
+lazy val streaming = project.in(file("streaming")).dependsOn(core)
