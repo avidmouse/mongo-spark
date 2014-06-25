@@ -19,9 +19,9 @@ class MongoSparkContext(sc: SparkContext) {
     qb.sortOpt.foreach(s => config.set("mongo.input.sort", s.toString()))
     qb.limitOpt.foreach(l => config.set("mongo.input.limit", l.toString))
     qb.skipOpt.foreach(s => config.set("mongo.input.skip", s.toString))
-    sc.newAPIHadoopRDD(config, classOf[MongoInputFormat], classOf[Object], classOf[BSONObject]).map(
-      arg => BSONFormats.toJSON(arg._2)
-    )
+    sc.newAPIHadoopRDD(config, classOf[MongoInputFormat], classOf[Object], classOf[BSONObject]).map {
+      case (_, value) => BSONFormats.toJSON(value)
+    }
   }
 }
 
