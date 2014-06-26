@@ -21,6 +21,7 @@ object BSONFormats {
       case JsNumber(v) => v.toInt
       case JsString(v) => v
       case JsArray(v) => v.map(toBSON).asJava
+      case JsObject(("$oid", JsString(v)) +: Nil) => new BasicBSONObject("_id", new org.bson.types.ObjectId(v))
       case JsObject(fields) => new BasicBSONObject(fields.map(field => field._1 -> toBSON(field._2)).toMap.asJava)
       case _: JsUndefined => null
     }

@@ -4,6 +4,8 @@ version := "1.0"
 
 scalaVersion := "2.10.4"
 
+scalacOptions += "-feature"
+
 libraryDependencies ++= Seq(
  "org.apache.hadoop" % "hadoop-client" % "2.2.0",
   "org.apache.spark" %% "spark-streaming" % "1.0.0",

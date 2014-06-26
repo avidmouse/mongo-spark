@@ -29,6 +29,8 @@ object MongoSparkContext {
 
   object Implicits {
 
+    import scala.language.implicitConversions
+
     implicit def asMongoSparkContext(sc: SparkContext) = new MongoSparkContext(sc)
   }
 

@@ -25,13 +25,13 @@ object WordCount {
 
     val mongo = Mongo(mongoUri)
 
-    val sparkConf = new SparkConf().setAppName("casDemo")
+    val sparkConf = new SparkConf().setAppName("WordCount")
     // Get a SparkContext
     val sc = new SparkContext(sparkConf)
 
     val words = sc.mongoRDD(mongo.collection(commentsCollection).find(Json.obj(), Json.obj("msg" -> 1)))
 
-    val counts = words.flatMap(msg => msg.as[String].split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+    val counts = words.flatMap(doc => (doc \ "msg").as[String].split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
 
     counts.map {
       case (word, count) =>
